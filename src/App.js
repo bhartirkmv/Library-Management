@@ -1,23 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
+import { useEffect} from 'react';
+
+import BookList from './components/BookList';
+import BookCreate  from './components/BookCreate';
+import useBooksContext from './hooks/use-books-context';
+
+
+function App () {
+
+  const { fetchBooks } = useBooksContext();
+
+  // This useEffect is called only one time when our component is 
+  // rendered on the screen.
+  // We still want to call fetch books when our App component is first displayed.
+  useEffect(() => {
+    fetchBooks();
+  }, [fetchBooks]);
+
+  // The array is called Dependency Array.
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='app'>
+      <h1>Reading List</h1>
+      <BookList/>
+      <BookCreate/>
     </div>
   );
 }
